@@ -25,13 +25,13 @@ describe('get', () => {
   });
 
   describe('when no topic is provided (all query)', () => {
-    it('should return empty string when library was not added', async () => {
+    it('should return a special message when library was not added', async () => {
       // Act
       const options: GetOptions = { name: 'non-existent/repo', k: 10 };
       const result = await get(options);
 
       // Assert
-      expect(result).toBe('');
+      expect(result).toInclude('No snippets found');
       expect(embed).not.toHaveBeenCalled();
     });
 
@@ -157,7 +157,7 @@ def test():
       expect(embed).toHaveBeenCalledWith('how to log messages');
     });
 
-    it('should return empty string when no similar snippets found', async () => {
+    it('should return a special message when no similar snippets found', async () => {
       // Act
       const result = await get({
         name: 'non-existent/repo',
@@ -166,7 +166,7 @@ def test():
       });
 
       // Assert
-      expect(result).toBe('');
+      expect(result).toInclude('No snippets found');
       expect(embed).toHaveBeenCalledWith('some topic');
     });
   });

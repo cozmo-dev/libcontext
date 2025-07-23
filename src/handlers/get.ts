@@ -33,16 +33,25 @@ const all = async ({ name, k }: GetOptions) => {
 };
 
 export const get = async (options: GetOptions) => {
-  const query = options.topic ? similarity : all;
-  const results = await query(options);
-  const snippets = results.map(
-    (snippet) => `TITLE: ${snippet.title}
+  try {
+    const query = options.topic ? similarity : all;
+    const results = await query(options);
+
+    if (results.length === 0) {
+      return `No snippets found for library "${options.name}"${options.topic ? ` with topic: "${options.topic}"` : ''}`;
+    }
+
+    const snippets = results.map(
+      (snippet) => `TITLE: ${snippet.title}
 DESCRIPTION: ${snippet.description}
 LANGUAGE: ${snippet.language}
 CODE:
 \`\`\`
 ${snippet.code}
 \`\`\``,
-  );
-  return snippets.join('\n----------------------------------------\n');
+    );
+    return snippets.join('\n----------------------------------------\n');
+  } catch (error) {
+    return 'Failed to retrieve snippets';
+  }
 };

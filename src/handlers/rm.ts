@@ -6,9 +6,6 @@ export interface RemoveOptions {
 }
 
 export const rm = async ({ name }: RemoveOptions) => {
-  const libraries = await db
-    .delete(library)
-    .where(eq(library.name, name))
-    .returning();
-  return libraries.length;
+  const libraries = await db.delete(library).where(eq(library.name, name));
+  return libraries.rowsAffected;
 };

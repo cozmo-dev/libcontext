@@ -24,6 +24,10 @@ describe('embed', () => {
     mocks.forEach((mockResult) => mockResult.clear());
   });
 
+  it('should handle empty inputs', async () => {
+    expect(embed('')).rejects.toThrow('Input cannot be empty');
+  });
+
   it('should return embedding array for valid input', async () => {
     // Arrange
     const input = 'Hello world';
