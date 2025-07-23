@@ -21,6 +21,8 @@ jobs:
         run: bun run build
 
       - name: Publish package
+        env:
+          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           # Extract version from tag (remove 'v' prefix if present)
           VERSION=${GITHUB_REF_NAME#v}
