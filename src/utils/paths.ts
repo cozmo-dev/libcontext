@@ -55,6 +55,12 @@ const linux = () => {
   };
 };
 
+/**
+ * Returns an object containing platform-specific directory paths for application data, configuration, cache, logs, and temporary files.
+ *
+ * The returned paths are determined based on the current operating system.
+ * @returns An object with keys `data`, `config`, `cache`, `log`, and `temp`, each mapped to the appropriate directory path for the current platform.
+ */
 function parse() {
   switch (process.platform) {
     case 'darwin':
