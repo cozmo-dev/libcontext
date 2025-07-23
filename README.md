@@ -8,7 +8,7 @@ LibContext is a local-first, privacy-focused tool to build AI-friendly context f
 
 ## Overview
 
-LibContext MCP pulls up-to-date, version-specific, relevant documentation and code examples from a GitHub repository and places them into .
+LibContext MCP pulls up-to-date, version-specific, relevant documentation and code examples from a GitHub repository and makes it available to your IDE.
 
 Add `use libcontext` to your prompt in Cursor:
 
