@@ -271,10 +271,11 @@ Add this to your Windsurf MCP config file. See [Windsurf MCP docs](https://docs.
 ## Security & Privacy
 
 - **Private by Default:**  
-  No data leaves your machine.
+  All indexes are stored locally.  
+  ⚠️  During the *AI Extraction* step the selected documentation is sent to the OpenAI API (or whichever LLM you configure).  
+  If you need zero-egress processing, self-host the model or disable extraction.
 - **Private Repo Support:**  
   Your GitHub token is only used locally to fetch documentation.
-
 ---
 
 ## Contributing
