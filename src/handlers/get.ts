@@ -8,8 +8,20 @@ export interface GetOptions {
   k: number;
 }
 
-const similarity = async ({ name, topic, k }: GetOptions) => {
-  const vector = await embed(topic!);
+const all = async ({ name, k }: GetOptions) => {
+  return await db
+    .select()
+    .from(snippet)
+    .where(eq(snippet.library, name))
+    .limit(k);
+};
+
+const similarity = async ({
+  name,
+  topic,
+  k,
+}: GetOptions & { topic: string }) => {
+  const vector = await embed(topic);
   return db
     .select({
       title: snippet.title,
@@ -24,21 +36,14 @@ const similarity = async ({ name, topic, k }: GetOptions) => {
     .where(eq(snippet.library, name));
 };
 
-const all = async ({ name, k }: GetOptions) => {
-  return await db
-    .select()
-    .from(snippet)
-    .where(eq(snippet.library, name))
-    .limit(k);
-};
-
-export const get = async (options: GetOptions) => {
+export const get = async ({ name, topic, k }: GetOptions) => {
   try {
-    const query = options.topic ? similarity : all;
-    const results = await query(options);
+    const results = topic
+      ? await similarity({ name, topic, k })
+      : await all({ name, topic, k });
 
     if (results.length === 0) {
-      return `No snippets found for library "${options.name}"${options.topic ? ` with topic: "${options.topic}"` : ''}`;
+      return `No snippets found for library "${name}"${topic ? ` with topic: "${topic}"` : ''}`;
     }
 
     const snippets = results.map(
@@ -51,7 +56,7 @@ ${snippet.code}
 \`\`\``,
     );
     return snippets.join('\n----------------------------------------\n');
-  } catch (error) {
+  } catch (_error) {
     return 'Failed to retrieve snippets';
   }
 };

@@ -6,7 +6,7 @@ import { type GetOptions, get } from './get';
 
 describe('get', () => {
   const lib = stubs.libraries['org1/repo1'];
-  const embed = mock(async (text: string) =>
+  const embed = mock(async () =>
     Array.from({ length: 1536 }, (_, i) => i * 0.001),
   );
   let mocks: MockResult[] = [];

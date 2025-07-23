@@ -1,6 +1,6 @@
+import path from 'node:path';
 import { rootPath } from '@libcontext/utils/package';
 import { migrate as execute } from 'drizzle-orm/libsql/migrator';
-import path from 'path';
 import { db } from './db';
 import { library } from './schema';
 

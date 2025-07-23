@@ -24,7 +24,7 @@
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false,
     "paths": {
-      "@libcontext/*": ["./src/*"],
-    },
-  },
+      "@libcontext/*": ["./src/*"]
+    }
+  }
 }
