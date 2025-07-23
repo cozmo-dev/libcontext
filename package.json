@@ -1,6 +1,6 @@
 {
   "name": "libcontext",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "main": "./dist/index.js",
   "type": "module",
   "bin": {
@@ -15,6 +15,7 @@
   "scripts": {
     "dev": "bun src/index.ts",
     "inspect": "fastmcp inspect src/mcp/index.ts",
+    "lint": "bun biome check",
     "build": "bun build.ts",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",

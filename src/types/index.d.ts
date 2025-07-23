@@ -1,6 +1,6 @@
 import type { Argv } from 'yargs';
 
-export interface Command<T = {}> {
+export interface Command<T = never> {
   command: string;
   description: string;
   builder?: (yargs: Argv) => Argv<T>;

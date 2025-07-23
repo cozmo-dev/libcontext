@@ -1,7 +1,7 @@
+import os from 'node:os';
+import path from 'node:path';
+import process from 'node:process';
 import { name } from '@libcontext/constants';
-import os from 'os';
-import path from 'path';
-import process from 'process';
 
 const homedir = os.homedir();
 const tmpdir = os.tmpdir();

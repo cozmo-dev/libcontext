@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build
+        run: bun run build
+
+      - name: Publish package
+        env:
+          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          # Extract version from tag (remove 'v' prefix if present)
+          VERSION=${GITHUB_REF_NAME#v}
+
+          # Update package.json version
+          bun x json -I -f package.json -e "this.version='$VERSION'"
+
+          # Publish with appropriate tag
+          if [[ "${{ github.event.release.prerelease }}" == "true" ]]; then
+            bun publish --access public --tag canary
+          else
+            bun publish --access public
+          fi

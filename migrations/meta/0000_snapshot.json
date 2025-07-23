@@ -154,12 +154,8 @@
           "name": "snippets_library_libraries_name_fk",
           "tableFrom": "snippets",
           "tableTo": "libraries",
-          "columnsFrom": [
-            "library"
-          ],
-          "columnsTo": [
-            "name"
-          ],
+          "columnsFrom": ["library"],
+          "columnsTo": ["name"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
