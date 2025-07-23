@@ -9,5 +9,9 @@ export const migrate = async () => {
 };
 
 export const clear = async () => {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('Clear operation is not allowed in production environment');
+  }
+
   await db.delete(library);
 };

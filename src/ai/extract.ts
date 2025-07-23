@@ -112,7 +112,10 @@ ${content}
     ),
   });
 
-  const response = completion.choices[0].message.parsed;
+  if (!completion.choices?.length) {
+    return [];
+  }
 
+  const response = completion.choices[0].message.parsed;
   return response?.snippets || [];
 };

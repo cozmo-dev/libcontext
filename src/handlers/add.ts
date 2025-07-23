@@ -7,8 +7,7 @@ import { eq } from 'drizzle-orm';
 const fromName = (lib: string): { owner: string; repo: string } => {
   const parts = lib.split('/');
   if (parts.length !== 2) {
-    console.log('Library name must be in format owner/repo');
-    process.exit(1);
+    throw new Error('Library name must be in format owner/repo');
   }
   return { owner: parts[0].trim(), repo: parts[1].trim() };
 };

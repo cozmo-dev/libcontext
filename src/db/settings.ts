@@ -1,4 +1,3 @@
-/*
 import { name } from '@libcontext/constants';
 import { paths } from '@libcontext/utils/paths';
 import { mkdirSync } from 'fs';
@@ -13,5 +12,8 @@ if (process.env.NODE_ENV !== 'test') {
     process.exit(1);
   }
 }
-*/
-export const url = ':memory:';
+
+export const url =
+  process.env.NODE_ENV === 'test'
+    ? ':memory:'
+    : `file:${paths.data}/${name}.db`;
