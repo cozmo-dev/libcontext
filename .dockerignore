@@ -1,0 +1,12 @@
+# Prevent unnecessary files from being copied into Docker image
+node_modules
+bun.lockb
+*.log
+.env
+.git
+.gitignore
+Dockerfile
+docker-compose.yml
+.dockerignore
+README.md
+tests

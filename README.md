@@ -63,6 +63,81 @@ Or use it directly with `npx` (no installation required):
 ```bash
 npx -y libcontext <command>
 ```
+---
+
+## 🐳 Docker Support
+
+You can also run LibContext using Docker or Docker Compose. This is ideal for isolated setups, local development environments, or CI pipelines.
+
+---
+
+### ✅ Prerequisites
+
+- Docker and Docker Compose installed  
+- A valid `OPENAI_API_KEY`
+
+---
+
+### 📁 Create a `.env` file in your project root
+
+```bash
+touch .env
+```
+
+Then add this inside:
+
+```env
+OPENAI_API_KEY=sk-mockapikey1234...
+```
+
+👉 Please refer to `.env.example` for more details.
+
+---
+
+### 🚀 Quick Start (with Docker Compose)
+
+Use Docker Compose to build and run the app:
+
+```bash
+docker-compose up --build -d
+```
+
+Visit: [http://localhost:3000](http://localhost:3000)
+
+---
+
+### 📦 Data Directory Location
+
+By default, it will create a data directory at `/data/libcontext` inside the container.  
+You can change this path using the `LIBCONTEXT_DATA_FOLDER` environment variable:
+
+#### 🔸 Linux/macOS
+
+```bash
+LIBCONTEXT_DATA_FOLDER=/custom/path docker-compose up --build
+```
+
+#### 🔸 Windows CMD
+
+```cmd
+set LIBCONTEXT_DATA_FOLDER=/custom/path && docker-compose up --build
+```
+
+#### 🔸 Windows PowerShell
+
+```powershell
+$env:LIBCONTEXT_DATA_FOLDER = "/custom/path"; docker-compose up --build
+```
+
+---
+
+### 🛑 Stop & Remove the Container
+
+```bash
+docker-compose down
+```
+
+
 
 ---
 
