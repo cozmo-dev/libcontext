@@ -17,9 +17,10 @@ function getDefaultDataPath() {
   switch (process.platform) {
     case 'darwin':
       return path.join(homedir, 'Library', 'Application Support', name);
-    case 'win32':
+    case 'win32': {
       const localAppData = env.LOCALAPPDATA || path.join(homedir, 'AppData', 'Local');
       return path.join(localAppData, name, 'Data');
+    }
     default:
       return path.join(
         env.XDG_DATA_HOME || path.join(homedir, '.local', 'share'),

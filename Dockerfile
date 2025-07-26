@@ -16,9 +16,10 @@ FROM oven/bun:1.0
 
 WORKDIR /app
 
-COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY package.json ./
+
+RUN bun install --production
 
 RUN mkdir -p /data/libcontext && \
     chown -R bun:bun /data/libcontext
