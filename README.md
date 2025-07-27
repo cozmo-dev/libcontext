@@ -159,11 +159,17 @@ libcontext start [--transport stdio|httpStream] [--port <port>]
 
 ---
 
-## IDE & Tool Integration
+### MCP server
 
 LibContext exposes a Model Context Protocol (MCP) server, making it easy to integrate with popular AI coding tools and IDEs.
 
-### Cursor
+Requirements:
+
+- Node.js >= v18.0.0
+- Cursor, Windsurf, Claude Desktop or another MCP Client
+
+<details>
+<summary>Cursor</summary>
 
 Go to: `Settings` -> `Cursor Settings` -> `MCP` -> `Add new global MCP server`
 
@@ -223,7 +229,10 @@ Or if you have not installed globally:
 
 </details>
 
-### Windsurf
+</details>
+
+<details>
+<summary>Windsurf</summary>
 
 Add this to your Windsurf MCP config file. See [Windsurf MCP docs](https://docs.windsurf.com/windsurf/mcp) for more info.
 
@@ -241,7 +250,45 @@ Add this to your Windsurf MCP config file. See [Windsurf MCP docs](https://docs.
 }
 ```
 
----
+</details>
+
+<details>
+<summary>Docker</summary>
+
+If you prefer to run the MCP server in a Docker container:
+
+1. **Build the Docker Image:**
+
+   Then, build the image in the project root using a tag (e.g., `libcontext`). **Make sure Docker Desktop (or the Docker daemon) is running.** Run the following command in the same directory where you saved the `Dockerfile`:
+
+   ```bash
+   docker build -t libcontext .
+   ```
+
+2. **Configure Your MCP Client:**
+
+   Update your MCP client's configuration to use the Docker command.
+
+   _Example for a cline_mcp_settings.json:_
+
+   ```json
+   {
+     "mcpServers": {
+       "LibContext": {
+         "autoApprove": [],
+         "disabled": false,
+         "timeout": 60,
+         "command": "docker",
+         "args": ["run", "-i", "--rm", "libcontext"],
+         "transportType": "stdio"
+       }
+     }
+   }
+   ```
+
+   _Note: This is an example configuration. Please refer to the specific examples for your MCP client (like Cursor, VS Code, etc.) earlier in this README to adapt the structure (e.g., `mcpServers` vs `servers`). Also, ensure the image name in `args` matches the tag used during the `docker build` command._
+
+</details>
 
 ## Tips
 
@@ -272,10 +319,11 @@ Add this to your Windsurf MCP config file. See [Windsurf MCP docs](https://docs.
 
 - **Private by Default:**  
   All indexes are stored locally.  
-  ⚠️  During the *AI Extraction* step the selected documentation is sent to the OpenAI API (or whichever LLM you configure).  
+  ⚠️ During the _AI Extraction_ step the selected documentation is sent to the OpenAI API (or whichever LLM you configure).  
   If you need zero-egress processing, self-host the model or disable extraction.
 - **Private Repo Support:**  
   Your GitHub token is only used locally to fetch documentation.
+
 ---
 
 ## Contributing
@@ -301,6 +349,12 @@ Add this to your Windsurf MCP config file. See [Windsurf MCP docs](https://docs.
 ## License
 
 MIT
+
+---
+
+## Credits
+
+Inspired by [upstash/context7](https://github.com/upstash/context7), but designed for local/private workflows.
 
 ---
 

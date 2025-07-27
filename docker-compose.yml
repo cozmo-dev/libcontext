@@ -1,0 +1,14 @@
+services:
+  libcontext:
+    build: .
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - libcontext_data:/data
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+volumes:
+  libcontext_data:
+
