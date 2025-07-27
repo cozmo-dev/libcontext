@@ -1,16 +1,14 @@
-version: '3.8'
-
 services:
   libcontext:
     build: .
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - LIBCONTEXT_DATA_FOLDER=${LIBCONTEXT_DATA_FOLDER:-/data/libcontext}
     volumes:
-      - libcontext_data:/data/libcontext
+      - libcontext_data:/data
     ports:
       - "3000:3000"
     restart: unless-stopped
 
 volumes:
   libcontext_data:
+
