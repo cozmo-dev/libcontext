@@ -1,38 +1,37 @@
-#Builder stage
-FROM oven/bun:1.0 as builder
+# ---- Base setup with Bun ----
+FROM oven/bun:1 AS base
+WORKDIR /usr/src/app
 
-# Install dependencies
-WORKDIR /app
-COPY package.json bun.lockb ./
-RUN bun install
+# ---- Install production dependencies ----
+FROM base AS deps
+COPY package.json bun.lock* ./
+RUN bun install --frozen-lockfile --production
 
-COPY . .
+# ---- Final runtime image ----
+FROM base AS runtime
 
-
-RUN bun run build
-
-#production stage
-FROM oven/bun:1.0
-
-WORKDIR /app
-
-COPY --from=builder /app/dist ./dist
-COPY package.json ./
-
-RUN bun install --production
-
-RUN mkdir -p /data/libcontext && \
-    chown -R bun:bun /data/libcontext
-
-# Set environment variables
+# Use environment variables to redirect config/data to /data
 ENV NODE_ENV=production
+ENV XDG_CONFIG_HOME=/data
+ENV XDG_DATA_HOME=/data
+ENV XDG_CACHE_HOME=/data/cache
 
+# Copy built deps
+COPY --from=deps /usr/src/app/node_modules ./node_modules
 
-EXPOSE 3000
+# Copy application files
+COPY package.json ./
+COPY tsconfig.json ./
+COPY migrations/ ./migrations/
+COPY src/ ./src/
 
+# Declare volume for persistent app data/config/cache
+VOLUME /data
+RUN mkdir -p /data && chown -R bun:bun /data
 
+# Set up non-root user for safety
 USER bun
 
-#entrypoints
-ENTRYPOINT ["bun", "run", "dist/index.js"]
-CMD ["start", "--transport", "httpStream", "--port", "3000"]
+# Run the app
+ENTRYPOINT ["bun", "run", "start"]
+CMD ["start", "--transport", "httpStream"]
