@@ -34,4 +34,4 @@ USER bun
 
 # Run the app
 ENTRYPOINT ["bun", "run", "start"]
-CMD ["start", "--transport", "httpStream"]
+CMD ["start"]

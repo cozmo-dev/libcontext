@@ -13,7 +13,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "dev": "bun src/index.ts --watch",
+    "dev": "bun --watch src/index.ts",
     "start": "bun src/index.ts",
     "inspect": "fastmcp inspect src/mcp/index.ts",
     "lint": "bun biome check",
